@@ -1,0 +1,20 @@
+[package]
+name = "racer-macros"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Proc macros for RACER message generation from TOML"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2", features = ["full", "parsing", "extra-traits"] }
+quote = "1"
+proc-macro2 = "1"
+toml = "0.8"
+serde = { workspace = true }
+
+[dev-dependencies]
+racer-core = { path = "../racer-core" }
+trybuild = "1"

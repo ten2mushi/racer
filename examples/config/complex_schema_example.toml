@@ -1,0 +1,25 @@
+# Example message definition for the proc macro
+
+[message]
+name = "SensorReading"
+
+[[message.fields]]
+name = "timestamp"
+type = "u64"
+id_field = true
+
+[[message.fields]]
+name = "sensor_id"
+type = "string"
+max_length = 32
+required = true
+
+[[message.fields]]
+name = "readings"
+type = "array<f64>"
+min_length = 1
+max_length = 100
+
+[[message.fields]]
+name = "metadata"
+type = "map<string, string>"

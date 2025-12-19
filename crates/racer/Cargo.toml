@@ -1,0 +1,66 @@
+[package]
+name = "racer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Lightweight leaderless consensus for IoT"
+
+[features]
+default = []
+bls = ["dep:blst"]
+cli = ["dep:clap", "dep:file-rotate", "dep:directories", "dep:anyhow"]
+
+[dependencies]
+racer-core = { path = "../racer-core" }
+racer-macros = { path = "../racer-macros" }
+
+# Async runtime
+tokio = { version = "1", features = ["full", "sync", "time", "macros", "rt-multi-thread"] }
+
+# ZeroMQ
+zeromq = "0.4"
+
+# Cryptography
+p256 = { version = "0.13", features = ["ecdsa"] }
+ecdsa = { version = "0.16", features = ["signing", "verifying"] }
+sha2 = "0.10"
+rand = "0.8"
+blst = { version = "0.3", optional = true }
+
+# Merkle tree
+rs_merkle = "1"
+
+# Data
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml = "0.8"
+
+# Statistics & signal processing
+rand_distr = "0.4"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["json", "env-filter"] }
+
+# Error handling
+thiserror = { workspace = true }
+
+# Utilities
+base64 = "0.22"
+hex = "0.4"
+
+# CLI (optional, enabled with `cli` feature)
+clap = { version = "4", features = ["derive", "env"], optional = true }
+file-rotate = { version = "0.7", optional = true }
+directories = { version = "5", optional = true }
+anyhow = { version = "1", optional = true }
+
+[dev-dependencies]
+tokio-test = "0.4"
+tempfile = "3"
+futures = "0.3"
+
+[[bin]]
+name = "racer"
+path = "src/bin/main.rs"
+required-features = ["cli"]

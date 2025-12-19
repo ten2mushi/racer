@@ -1,0 +1,47 @@
+# Sensor Network Configuration
+#
+# A 5-node P2P network demonstrating RACER leaderless consensus
+# with custom IoT sensor message types.
+
+[network]
+name = "sensor-network"
+# Use different ports from multi-node to allow parallel runs
+base_router_port = 22001
+base_publisher_port = 23001
+
+# Sensor nodes - each represents an IoT device
+# Sensor nodes - generated programmatically
+node_count = 10
+
+# AT2/SPDE consensus parameters
+# Tuned for 100-node network with achievable thresholds
+[consensus]
+echo_sample_size = 10      # Sample 10 peers for ECHO phase
+ready_sample_size = 10     # Sample 10 peers for READY phase
+delivery_sample_size = 10  # Sample 10 peers for DELIVERY
+ready_threshold = 7        # Need 7 ECHOs to proceed
+feedback_threshold = 7     # Need 7 READYs for re-gossip
+delivery_threshold = 8     # Need 8 READYs to DELIVER
+
+# PLATO congestion control
+# Faster settings for demo purposes
+[plato]
+target_latency_secs = 1.5
+target_publishing_frequency_secs = 1.0
+max_publishing_frequency_secs = 5.0
+minimum_latency_secs = 0.5
+max_gossip_timeout_secs = 30.0
+
+# Scenario settings
+[scenarios]
+# Each sensor submits 10 readings
+messages_per_node = 10
+# 200ms between readings (simulating real sensor intervals)
+message_interval_ms = 200
+
+# Logging - per-node directories with delivered message logs
+[logging]
+enabled = true
+log_dir = "logs/{node_id}"
+delivered_file = "delivered.jsonl"
+rotation_enabled = false

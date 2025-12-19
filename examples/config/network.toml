@@ -1,0 +1,61 @@
+# Multi-Node Network Configuration
+#
+# Defines a P2P network topology for testing RACER leaderless consensus.
+# Each node is spawned as a tokio task with its own ZeroMQ sockets.
+
+[network]
+name = "local-test"
+# Base port for ZeroMQ ROUTER sockets (node N uses base + N)
+base_router_port = 20001
+# Base port for ZeroMQ PUB sockets (node N uses base + N)
+base_publisher_port = 21001
+
+# Define nodes by ID. Ports are computed automatically from base + index.
+[[network.nodes]]
+id = "node-0"
+
+[[network.nodes]]
+id = "node-1"
+
+[[network.nodes]]
+id = "node-2"
+
+[[network.nodes]]
+id = "node-3"
+
+[[network.nodes]]
+id = "node-4"
+
+# AT2/SPDE consensus parameters
+# For a 5-node network, we need thresholds achievable with 4 peers
+[consensus]
+echo_sample_size = 4       # Sample 4 peers for ECHO phase
+ready_sample_size = 4      # Sample 4 peers for READY phase
+delivery_sample_size = 4   # Sample 4 peers for DELIVERY
+ready_threshold = 2        # Need 2 ECHOs to proceed (>50% of 4)
+feedback_threshold = 2     # Need 2 READYs for re-gossip
+delivery_threshold = 3     # Need 3 READYs to DELIVER (75% of 4)
+
+# PLATO congestion control parameters
+[plato]
+target_latency_secs = 2.0
+target_publishing_frequency_secs = 1.5
+max_publishing_frequency_secs = 10.0
+minimum_latency_secs = 0.5
+max_gossip_timeout_secs = 30.0
+
+# Scenario configuration
+[scenarios]
+# Number of messages each node will submit per scenario
+messages_per_node = 5
+# Interval between messages in milliseconds
+message_interval_ms = 300
+# Duration of simulated failure in seconds
+failure_duration_secs = 3
+
+# Logging configuration - enables per-node delivered message logs
+[logging]
+enabled = true
+log_dir = "logs/{node_id}"
+delivered_file = "delivered.jsonl"
+rotation_enabled = false

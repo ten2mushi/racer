@@ -1,0 +1,32 @@
+# RACER default configuration
+
+[node]
+# id = "node_01"  # Auto-generated if not specified
+router_bind = "tcp://0.0.0.0:20001"
+publisher_bind = "tcp://0.0.0.0:21001"
+selection_type = "normal"
+
+[consensus]
+echo_sample_size = 6
+ready_sample_size = 6
+delivery_sample_size = 6
+ready_threshold = 4
+feedback_threshold = 5
+delivery_threshold = 6
+
+[plato]
+target_latency_secs = 2.5
+target_publishing_frequency_secs = 2.5
+max_publishing_frequency_secs = 10.0
+minimum_latency_secs = 1.0
+max_gossip_timeout_secs = 60.0
+rsi_increase_period = 14
+rsi_decrease_period = 21
+rsi_overbought = 70.0
+rsi_oversold = 30.0
+own_latency_weight = 0.6
+savgol_increase_window = 14
+savgol_decrease_window = 21
+
+[peers]
+routers = []

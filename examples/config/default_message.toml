@@ -1,0 +1,13 @@
+# Default message matching reference implementation
+
+[message]
+name = "DefaultMessage"
+
+[[message.fields]]
+name = "timestamp"
+type = "u64"
+id_field = true
+
+[[message.fields]]
+name = "padding"
+type = "u64"

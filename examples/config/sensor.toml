@@ -1,0 +1,40 @@
+# Sensor Reading Message Definition
+#
+# Defines a custom message type for IoT sensor data.
+# Used with the #[racer_message("config/sensor.toml")] macro.
+
+[message]
+name = "SensorReading"
+
+# Timestamp serves as the unique ID for ordering
+[[message.fields]]
+name = "timestamp"
+type = "u64"
+id_field = true
+
+# Unique identifier for the physical sensor
+[[message.fields]]
+name = "sensor_id"
+type = "string"
+max_length = 32
+required = true
+
+# Type of measurement (temperature, humidity, pressure, etc.)
+[[message.fields]]
+name = "sensor_type"
+type = "string"
+max_length = 16
+required = true
+
+# The actual measurement value
+[[message.fields]]
+name = "value"
+type = "f64"
+min = -1000.0
+max = 1000.0
+
+# Unit of measurement (°C, %, hPa, etc.)
+[[message.fields]]
+name = "unit"
+type = "string"
+max_length = 8

@@ -1,0 +1,36 @@
+[package]
+name = "racer-examples"
+version.workspace = true
+edition.workspace = true
+description = "Test harnesses for RACER consensus"
+
+[dependencies]
+racer = { path = "../crates/racer" }
+racer-core = { path = "../crates/racer-core" }
+
+# Async runtime
+tokio = { version = "1", features = ["full", "signal"] }
+
+# Data
+serde = { workspace = true }
+serde_json = "1"
+toml = "0.8"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+
+# Error handling
+anyhow = "1"
+
+# Random
+rand = "0.8"
+
+[features]
+bls = ["racer/bls"]
+
+[[bin]]
+name = "sensor-network"
+path = "src/sensor_network.rs"
+
