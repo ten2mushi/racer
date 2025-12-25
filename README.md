@@ -80,3 +80,7 @@ demonstration of a sensor mesh on localnetwork.
   ```bash
   cargo run -p racer-examples --bin sensor-network --features bls -- examples/config/sensor_network.toml
   ```
+
+
+### note
+could be further optimized by batch processing READY and ECHO transmissions
